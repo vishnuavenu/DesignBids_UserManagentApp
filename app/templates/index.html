@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+
+{% block content %}
+        <div class="page-header">
+            <h1 align="center">User Management</h1>
+        </div>
+        <div class="container">
+
+            <!-- Left -->
+                <div class="panel panel-primary" style="float:left">
+                  <div align="center" class="panel-heading">
+                    <h3 class="panel-title">Person Detail</h3>
+                  </div>
+                    <div class="panel-body">
+                     <form method="POST">
+                         <table>
+                            <tr>
+                                <td>{{ form.username.label }}:</td> <td>{{ form.username() }}</td>
+                            </tr>
+                            <tr>
+                                <td> {{ form.password.label }}:</td> <td>{{form.password() }}</td>
+                            </tr>
+                             <tr>
+                                <td>{{ form.home.label }}:</td> <td>{{form.home() }}</td>
+                             </tr>
+                             <tr>
+                                 <td>{{ form.shell.label }}:</td> <td>{{form.shell()}}</td>
+                             </tr>
+                             <tr>
+                                <td>{{form.submit()}}</td>
+                             </tr>
+                             </table>
+                         </form>
+                    </div>
+                </div>
+
+
+            <!--  Right -->
+            <div style="float:right">
+                <div class="panel panel-primary" >
+                    <div align="center" class="panel-heading">
+                    <h3 class="panel-title">Person List</h3>
+                  </div>
+                <table class="table">
+                    <thead class="thead-inverse">
+                    <tr>
+                        <th>uid</th>
+                        <th>Name</th>
+                        <th>Password</th>
+                        <th>Shell</th>
+                        <th>GID</th>
+                        <th>Home Directory</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for person in people %}
+                        <tr>
+                            <form action="{{url_for('actionOnRecord')}}" method="POST" >
+                            <td><input type="hidden" value={{person.uid}} name="id" disabled="disabled"></td>
+                            <td><input type="text" value={{person.username}} name="name"></td>
+                            <td><input type="text" value={{person.password}} name="email"></td>
+                            <td><input type="text" value={{person.shell}} name="contact"></td>
+                            <td><input type="text" value={{person.gid}} name="city"></td>
+                            <td><input type="text" value="{{person.home}}" name="home"></td>
+                            <td><input type="submit" name="submit" value="Update"> </td>
+                            <td><input type="submit" name="submit" value="Delete"> </td>
+                            </form>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                </div>
+            </div>
+
+
+        </div>
+
+{% endblock %}
