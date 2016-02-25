@@ -45,6 +45,7 @@ def actionOnRecord():
     if request.method == "POST":
         if request.form['submit'] == 'Update':
             user = {}
+
             user["actual_name"] = request.form.get("actual_name")
             user["username"] = request.form.get("username")
             user["password"] = request.form.get("password")
@@ -60,7 +61,7 @@ def actionOnRecord():
         if request.form['submit'] == 'Delete':
 
             print("[+] Deletion Initiated.....")
-            username = request.form.get("name")
+            username = request.form.get("actual_name")
             print("[*] [ He/She ]Going to be deleted ...... %s "%(username))
 
             MANAGER.remove_user(username)
