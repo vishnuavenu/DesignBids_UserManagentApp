@@ -1,4 +1,4 @@
-from wtforms import StringField, SubmitField, Form, TextField, SelectField
+from wtforms import StringField, SubmitField, Form, SelectField
 from wtforms.validators import DataRequired
 
 
@@ -8,3 +8,4 @@ class UserForm(Form):
     shell = SelectField("Choose your Shell type", choices=[("/bin/zsh", "ZSH" ), ("/bin/bash","BASH"), ("/bin/sh", "SH")], default=("/bin/bash","BASH"))
     password = StringField('Enter the Password ', validators=[DataRequired()])
     submit = SubmitField("Add User")
+

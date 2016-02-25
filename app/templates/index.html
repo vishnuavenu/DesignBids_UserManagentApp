@@ -57,11 +57,12 @@
                         {% for person in people %}
                         <tr>
                             <form action="{{url_for('actionOnRecord')}}" method="POST" >
-                            <td><input type="hidden" value={{person.uid}} name="id" disabled="disabled"></td>
-                            <td><input type="text" value={{person.username}} name="name"></td>
-                            <td><input type="text" value={{person.password}} name="email"></td>
-                            <td><input type="text" value={{person.shell}} name="contact"></td>
-                            <td><input type="text" value={{person.gid}} name="city"></td>
+                            <input type="hidden" value={{person.username}} name="actual_name">
+                            <td><input type="hidden" value={{person.uid}} name="uid" disabled="disabled"></td>
+                            <td><input type="text" value={{person.username}} name="username"></td>
+                            <td><input type="text" value={{person.password}} name="password"></td>
+                            <td><input type="text" value={{person.shell}} name="shell"></td>
+                            <td><input type="text" value={{person.gid}} name="gid"></td>
                             <td><input type="text" value="{{person.home}}" name="home"></td>
                             <td><input type="submit" name="submit" value="Update"> </td>
                             <td><input type="submit" name="submit" value="Delete"> </td>

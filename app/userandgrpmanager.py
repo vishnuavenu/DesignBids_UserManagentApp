@@ -3,8 +3,6 @@ import pwd
 import grp
 
 
-
-
 class UserandGrpManager(object):
     def __init__(self):
         self.user_table = []
@@ -19,6 +17,7 @@ class UserandGrpManager(object):
         return self.group_table
 
     def update(self):
+        del self.user_table[:]  # cleaning previous record ..
         for user in pwd.getpwall():
             san_user = {}
             san_user['username'] = user.pw_name
@@ -29,6 +28,7 @@ class UserandGrpManager(object):
             san_user["gid"] = user.pw_gid
             self.user_table.append(san_user)
 
+        del self.group_table[:] # Delete Previous Record
         for group in grp.getgrall():
             san_grp= {}
             san_grp["grpname"] = group.gr_name
@@ -48,10 +48,25 @@ class UserandGrpManager(object):
             return False
         return True
 
+
+    def update_user(self,user, gid):
+        self.update()
+        try:
+            os.system("usermod -l %s -p %s -m -d %s -s %s -g %d %s" %
+            (user["username"], user["password"], user["home"], user["shell"], gid, user["actual_name"]))
+            self.update()
+        except KeyError:
+            return False  # Missing Info
+        except OSError:
+            print(" [+] Some OS ERROR .....  :/ ")
+            return False  # Internal Error
+        return True
+
+
     def remove_user(self, name):
         self.update()
         try:
-            os.system("userdel %s "%(name))
+            os.system("userdel -r %s "%(name)) # total annihilation
         except OSError:
             return False
         return True # operation successfull

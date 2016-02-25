@@ -7,4 +7,3 @@ manager.add_command("runserver", Server())
 
 
 manager.run()
-
