@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "bootstrap/base.html" %}
 
 {% block content %}
         <div class="page-header">
@@ -9,10 +9,10 @@
             <!-- Left -->
                 <div class="panel panel-primary" style="float:left">
                   <div align="center" class="panel-heading">
-                    <h3 class="panel-title">Person Detail</h3>
+                    <h3 class="panel-title">User Detail</h3>
                   </div>
                     <div class="panel-body">
-                     <form method="POST">
+                     <form action="{{url_for('add')}}"  method="POST">
                          <table>
                             <tr>
                                 <td>{{ form.username.label }}:</td> <td>{{ form.username() }}</td>
@@ -39,33 +39,34 @@
             <div style="float:right">
                 <div class="panel panel-primary" >
                     <div align="center" class="panel-heading">
-                    <h3 class="panel-title">Person List</h3>
+                    <h3 class="panel-title">User List</h3>
                   </div>
                 <table class="table">
                     <thead class="thead-inverse">
                     <tr>
                         <th>uid</th>
                         <th>Name</th>
-                        <th>Password</th>
                         <th>Shell</th>
-                        <th>GID</th>
                         <th>Home Directory</th>
                         <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                        {% for person in people %}
+                        {% for user in users %}
                         <tr>
-                            <form action="{{url_for('actionOnRecord')}}" method="POST" >
-                            <input type="hidden" value={{person.username}} name="actual_name">
-                            <td><input type="hidden" value={{person.uid}} name="uid" disabled="disabled"></td>
-                            <td><input type="text" value={{person.username}} name="username"></td>
-                            <td><input type="text" value={{person.password}} name="password"></td>
-                            <td><input type="text" value={{person.shell}} name="shell"></td>
-                            <td><input type="text" value={{person.gid}} name="gid"></td>
-                            <td><input type="text" value="{{person.home}}" name="home"></td>
+                            <form action="{{url_for('update')}}" method="POST" >
+                            <td><input value={{user.uid}} name="uid" readonly></td>
+                            <td>
+                                <input type="text" value={{user.username}} name="username"><br>
+                                <span class="label label-danger">{{error}}</span>
+                            </td>
+                            <td><input type="text" value={{user.shell}} name="shell"></td>
+                            <td><input type="text" value="{{user.home}}" name="home"></td>
                             <td><input type="submit" name="submit" value="Update"> </td>
-                            <td><input type="submit" name="submit" value="Delete"> </td>
+                            </form>
+                            <form action="{{url_for('delete')}}" method="POST">
+                                <td><input type="hidden" value={{user.uid}} name="uid" readonly></td>
+                                <td><input type="submit" name="submit" value="Delete"> </td>
                             </form>
                         </tr>
                         {% endfor %}
